@@ -195,7 +195,7 @@ const Leads = () => {
 
       {/* Lead Detail Sheet */}
       <LeadDetailSheet
-        lead={selectedLead}
+        leadId={selectedLead?.id || null}
         isOpen={isDetailSheetOpen}
         onClose={() => setIsDetailSheetOpen(false)}
       />

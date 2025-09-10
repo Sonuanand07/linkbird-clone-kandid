@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAppStore } from '@/stores/appStore';
 import {
   LayoutDashboard,
   Users,
@@ -37,12 +38,8 @@ const navigationItems = [
   },
 ];
 
-interface SidebarProps {
-  isCollapsed: boolean;
-  onToggle: () => void;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
+const Sidebar: React.FC = () => {
+  const { sidebarCollapsed: isCollapsed, toggleSidebar } = useAppStore();
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -72,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
         <Button
           variant="ghost"
           size="sm"
-          onClick={onToggle}
+          onClick={toggleSidebar}
           className="p-2"
         >
           {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}

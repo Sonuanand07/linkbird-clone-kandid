@@ -9,8 +9,8 @@ import MainLayout from "@/components/Layout/MainLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Leads from "./pages/Leads";
-import Campaigns from "./pages/Campaigns";
+import LeadsWithInfiniteScroll from "./pages/LeadsWithInfiniteScroll";
+import CampaignsUpgraded from "./pages/CampaignsUpgraded";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -45,7 +45,7 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <MainLayout>
-                    <Leads />
+                    <LeadsWithInfiniteScroll />
                   </MainLayout>
                 </ProtectedRoute>
               }
@@ -55,7 +55,7 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <MainLayout>
-                    <Campaigns />
+                    <CampaignsUpgraded />
                   </MainLayout>
                 </ProtectedRoute>
               }

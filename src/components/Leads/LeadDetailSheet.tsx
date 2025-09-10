@@ -3,16 +3,51 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lead } from '@/types';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useLead } from '@/lib/queries';
 import { Mail, Phone, Building, Calendar, DollarSign, FileText, MessageSquare } from 'lucide-react';
 
 interface LeadDetailSheetProps {
-  lead: Lead | null;
+  leadId: string | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const LeadDetailSheet: React.FC<LeadDetailSheetProps> = ({ lead, isOpen, onClose }) => {
+const LeadDetailSheet: React.FC<LeadDetailSheetProps> = ({ leadId, isOpen, onClose }) => {
+  const { data: lead, isLoading, error } = useLead(leadId);
+
+  if (error) {
+    return (
+      <Sheet open={isOpen} onOpenChange={onClose}>
+        <SheetContent className="w-full sm:max-w-lg">
+          <div className="flex items-center justify-center h-full">
+            <p className="text-destructive">Error loading lead details</p>
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Sheet open={isOpen} onOpenChange={onClose}>
+        <SheetContent className="w-full sm:max-w-lg">
+          <SheetHeader className="space-y-4">
+            <Skeleton className="h-6 w-32" />
+            <Skeleton className="h-4 w-48" />
+          </SheetHeader>
+          <div className="mt-6 space-y-6">
+            <div className="space-y-4">
+              <Skeleton className="h-20 w-full" />
+              <Skeleton className="h-16 w-full" />
+              <Skeleton className="h-24 w-full" />
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
   if (!lead) return null;
 
   const getStatusColor = (status: string) => {
